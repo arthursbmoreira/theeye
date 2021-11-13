@@ -17,8 +17,6 @@ class EventTestCase(TestCase):
         form_payload = Payload.objects.create(host='www.consumeraffairs.com', path='/', event=form_event)
         Form.objects.create(first_name='John', last_name='Doe', payload=form_payload)
 
-
-
     def test_events_created(self):
         pageview_event = Event.objects.get(name='pageview')
         click_event = Event.objects.get(name='cta_click')
