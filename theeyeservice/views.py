@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.db.models import query
+from rest_framework import viewsets
+from theeyeservice.models import Event
 
-# Create your views here.
+from theeyeservice.serializers import EventSerializer
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer

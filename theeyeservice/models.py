@@ -13,10 +13,10 @@ class Event(models.Model):
 class Payload(models.Model):
     host = models.CharField(max_length=50)
     path = models.CharField(max_length=50)
-    element = models.CharField(max_length=50)
+    element = models.CharField(max_length=50, blank=True, null=True)
     event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name='data')
 
 class Form(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
     payload = models.OneToOneField(Payload, on_delete=models.CASCADE)
