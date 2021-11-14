@@ -1,11 +1,15 @@
 from django.urls import path, include
-from rest_framework import routers, urlpatterns
-from rest_framework.routers import DefaultRouter
 from theeyeservice import views
 
-router = DefaultRouter()
-router.register(r'events', views.EventViewSet)
+event_list = views.EventViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+event_detail = views.EventViewSet.as_view({
+    'get': 'retrieve'
+})
 
-urlpatterns = [
-    path('', include(router.urls))
+urlpatterns = [    
+    path('events/', event_list, name='event-list'),
+    path('events/<int:pk>/', event_detail, name='event-detail'),
 ]
