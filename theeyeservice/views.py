@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework import permissions
 from theeyeservice.models import Event
 import logging
 
@@ -34,6 +35,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         logger.info('Querying events - start')
