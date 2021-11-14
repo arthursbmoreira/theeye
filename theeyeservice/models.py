@@ -3,9 +3,9 @@ from django.db.models.fields.related import OneToOneField
 from .validators import validate_event_date_not_future
 
 class Event(models.Model):
-    session_id = models.CharField(max_length=50)
-    category = models.CharField(max_length=50)
-    name = models.CharField(max_length=50)
+    session_id = models.TextField()
+    category = models.TextField()
+    name = models.TextField()
     timestamp = models.DateTimeField(validators=[validate_event_date_not_future])
     data = OneToOneField('Payload', on_delete=models.PROTECT)
 
@@ -13,11 +13,11 @@ class Event(models.Model):
         ordering = ['session_id', 'timestamp']
 
 class Payload(models.Model):
-    host = models.CharField(max_length=50)
-    path = models.CharField(max_length=50)
-    element = models.CharField(max_length=50, blank=True, default='')
+    host = models.TextField()
+    path = models.TextField()
+    element = models.TextField(blank=True, default='')
     form = OneToOneField('Form', on_delete=models.PROTECT, blank=True, null=True)
 
 class Form(models.Model):
-    first_name = models.CharField(max_length=50, blank=True, default='')
-    last_name = models.CharField(max_length=50, blank=True, default='')
+    first_name = models.TextField(blank=True, default='')
+    last_name = models.TextField(blank=True, default='')
