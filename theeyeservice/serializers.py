@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from theeyeservice.models import Event, Payload, Form
+import logging
+
+logger = logging.getLogger(__name__)
 
 class FormSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,14 +24,16 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ['session_id', 'category', 'name', 'timestamp', 'data']
 
     def create(self, validated_data):
+        """
+        Overriding the create method for the event serializer to save the payload and check if there is a Form in the payload.
+        Other scenarios are possible, but that is to be defined.
+        """
+        logger.info('Saving events - start')
+
+        form = Form.objects.create(**validated_data.get('data').pop('form')) if 'form' in validated_data.get('data') else None
         data = validated_data.pop('data')
-        if 'form' in data:
-            form = data.pop('form')
-        else:
-            form = {}
-
-        event = Event.objects.create(**validated_data)
-        payload = Payload.objects.create(event=event, **data)
-        Form.objects.create(payload=payload, **form)
-
+        data = Payload.objects.create(**data, form=form)
+        event = Event.objects.create(**validated_data, data=data)
+        
+        logger.info('Saving events - end')
         return event
