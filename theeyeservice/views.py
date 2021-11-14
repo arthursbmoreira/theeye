@@ -16,6 +16,8 @@ class EventViewSet(viewsets.ModelViewSet):
     Definig the HTTP verb will define the behavior
     HTTP GET ex1: localhost:8000/api/events/ will return all the events
     HTTP GET ex2: localhost:8000/api/events/1 will return the event with id 1
+    Use Basic Auth to perform POST request
+    Needs a valid user to be created
     HTTP POST ex: localhost:8000/api/events/ accepts a JSON body to be persisted
     POST body ex:   {
                     "session_id": "e2085be5-9137-4e4e-80b5-f1ffddc25423",
